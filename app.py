@@ -1,5 +1,4 @@
-﻿# ---------------------- Medi-Co AI Assistant ----------------------
-import streamlit as st
+﻿import streamlit as st
 import torch
 from transformers import (
     AutoTokenizer,
@@ -18,37 +17,46 @@ st.set_page_config(page_title="Medi-Co", page_icon="2.png", layout="wide")
 # ---------------------- Custom CSS ----------------------
 st.markdown("""
     <style>
-        /* General UI */
         body {
-            background-color: #ffffff;
+            background-color: #f4f6fb;
             color: #2c2c2c;
         }
+
         .main-title {
             text-align: center;
             font-size: 2.5em;
             font-weight: 800;
-            color: #3a86ff;
+            color: #2b6cb0;
             margin-bottom: 0.2em;
         }
+
         .subtitle {
             text-align: center;
             font-size: 1.1em;
-            color: #5f6368;
+            color: #555;
             margin-bottom: 25px;
         }
+
         .section-header {
             font-size: 1.3em;
             font-weight: 700;
             color: #264653;
             margin-bottom: 8px;
         }
+
+        /* Response Box (white card style) */
         .response-box {
-            background-color: #f8f9fa;
-            padding: 18px;
+            background-color: #ffffff;
+            padding: 20px;
             border-radius: 12px;
-            border: 1px solid #e0e0e0;
+            border: 1px solid #d0d7de;
             font-size: 1.05em;
+            color: #1a202c;
+            line-height: 1.6;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            animation: fadeIn 1.2s ease-in-out;
         }
+
         .info-box {
             background-color: #e8f3ff;
             padding: 15px;
@@ -57,6 +65,7 @@ st.markdown("""
             color: #03396c;
             border-left: 5px solid #3a86ff;
         }
+
         .warn-box {
             background-color: #fff4e6;
             padding: 15px;
@@ -65,6 +74,7 @@ st.markdown("""
             color: #663c00;
             border-left: 5px solid #ffa600;
         }
+
         .footer {
             text-align: center;
             color: #808080;
@@ -75,12 +85,13 @@ st.markdown("""
             color: #3a86ff;
             text-decoration: none;
         }
+
         .centered {
             display: flex;
             justify-content: center;
             align-items: center;
         }
-        /* Fade-in animation */
+
         @keyframes fadeIn {
             from {opacity: 0; transform: translateY(-10px);}
             to {opacity: 1; transform: translateY(0);}
@@ -88,6 +99,7 @@ st.markdown("""
         .fade-in {animation: fadeIn 1.2s ease-in-out;}
     </style>
 """, unsafe_allow_html=True)
+
 
 # ---------------------- Header with Centered Logo ----------------------
 def get_base64_image(image_path):
@@ -157,14 +169,14 @@ def ai_assistant(user_text=None, image=None):
         context += f"User says: {user_text}\n"
 
     full_prompt = (
-        "### Instruction:\n"
-        "You are Medi-Co, an intelligent AI health assistant. "
-        "Answer clearly, responsibly, and avoid giving prescriptions. "
-        "Explain causes and remedies in simple language.\n\n"
-        "### Input:\n"
-        f"{context}\n\n"
-        "### Response:\n"
+    "You are Medi-Co, a professional yet friendly AI health assistant.\n"
+    "Your goal is to help users understand their symptoms in simple terms, "
+    "provide possible causes, and suggest safe home remedies. "
+    "Do NOT prescribe medication or make definitive diagnoses.\n\n"
+    f"User Query: {context}\n\n"
+    "Medi-Co Response:"
     )
+
     response = generate_text_response(full_prompt)
     return response if response else "I'm sorry, I couldn’t generate a helpful response this time."
 
