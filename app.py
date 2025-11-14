@@ -17,7 +17,7 @@ import json
 import warnings
 warnings.filterwarnings("ignore")
 
-st.set_page_config(page_title="Medi-Co", page_icon="2.png", layout="wide")
+st.set_page_config(page_title="Medi-Co", page_icon="logo.png", layout="wide")
 
 # ---------------------- Load Core Models ----------------------
 @st.cache_resource
